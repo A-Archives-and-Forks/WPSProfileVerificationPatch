@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <stdexcept>
 #include <sstream>
+#include <format>
 #include <memory>
 #include <array>
 #include "Detours.h"
@@ -32,13 +33,20 @@ namespace WPSProfileVerificationPatch {
 #endif
         std::string fileName = ModuleUtil::GetFileName(nullptr);
         std::unique_ptr<const uint8_t[]> versionInfoData = VersionUtil::GetVersionInfoData(fileName);
-        std::optional<std::span<const uint8_t>> productName = VersionUtil::QueryVersionInfoValue(versionInfoData, "\\StringFileInfo\\000004b0\\ProductName");
+        std::optional<std::span<const uint8_t>> translation = VersionUtil::QueryVersionInfoValue(versionInfoData, "\\VarFileInfo\\Translation");
+        if (!translation.has_value()) {
+            // 没有找到 Translation，不进行 Hook
+            return;
+        }
+        uint16_t langId = *reinterpret_cast<const uint16_t*>(translation->data());
+        uint16_t codePage = *reinterpret_cast<const uint16_t*>(translation->data() + 2);
+        std::optional<std::span<const uint8_t>> productName = VersionUtil::QueryVersionInfoValue(versionInfoData, std::format("\\StringFileInfo\\{:04x}{:04x}\\ProductName", langId, codePage));
         if (!productName.has_value() || productName->size() != 11 || std::memcmp(productName->data(), "WPS Office", 11) != 0) {
             // ProductName 不是 WPS Office，不进行 Hook
             return;
         }
         std::span<const uint8_t> data;
-        std::optional<std::span<const uint8_t>> internalName = VersionUtil::QueryVersionInfoValue(versionInfoData, "\\StringFileInfo\\000004b0\\InternalName");
+        std::optional<std::span<const uint8_t>> internalName = VersionUtil::QueryVersionInfoValue(versionInfoData, std::format("\\StringFileInfo\\{:04x}{:04x}\\InternalName", langId, codePage));
         if (internalName.has_value() && internalName->size() >= 8 && std::memcmp(internalName->data(), "KPacket", 7) == 0) {
             // InternalName 以 KPacket 开头表明这是安装程序，要在主模块中查找特征码
             HMODULE module = ModuleUtil::GetHandle(std::nullopt);
