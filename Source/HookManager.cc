@@ -5,13 +5,15 @@
 #include "HookManager.h"
 
 namespace WPSProfileVerificationPatch {
-    void HookManager::InstallHooks(const std::vector<std::unique_ptr<IFunctionHook>>& hooks) {
+    size_t HookManager::InstallHooks(const std::vector<std::unique_ptr<IFunctionHook>>& hooks) {
         if (hooks.size() == 0) {
-            return;
+            return 0;
         }
 
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
+
+        size_t count = 0;
 
         for (auto& hook : hooks) {
             try {
@@ -30,26 +32,33 @@ namespace WPSProfileVerificationPatch {
             }
 
             DetourAttach(originalPointer, hook->GetDetourFunction());
+
+            ++count;
         }
 
         LONG result = DetourTransactionCommit();
 
         if (result != NO_ERROR) {
+            count = 0;
 #if defined WP_DEBUG
             std::stringstream ss;
             ss << "Failed to install hooks, error: " << result;
             MessageBoxA(nullptr, ss.str().c_str(), "Hook Install Failed", MB_ICONSTOP);
 #endif
         }
+
+        return count;
     }
 
-    void HookManager::UninstallHooks(const std::vector<std::unique_ptr<IFunctionHook>>& hooks) {
+    size_t HookManager::UninstallHooks(const std::vector<std::unique_ptr<IFunctionHook>>& hooks) {
         if (hooks.size() == 0) {
             return;
         }
 
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
+
+        size_t count = 0;
 
         for (auto& hook : hooks) {
             PVOID* originalPointer = hook->GetOriginalPointer();
@@ -59,16 +68,21 @@ namespace WPSProfileVerificationPatch {
             }
 
             DetourDetach(originalPointer, hook->GetDetourFunction());
+
+            ++count;
         }
 
         LONG result = DetourTransactionCommit();
 
         if (result != NO_ERROR) {
+            count = 0;
 #if defined WP_DEBUG
             std::stringstream ss;
             ss << "Failed to uninstall hooks, error: " << result;
             MessageBoxA(nullptr, ss.str().c_str(), "Hook Uninstall Failed", MB_ICONSTOP);
 #endif
         }
+
+        return count;
     }
 }

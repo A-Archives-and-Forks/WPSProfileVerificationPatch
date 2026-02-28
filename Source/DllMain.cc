@@ -1,4 +1,6 @@
 #include <Windows.h>
+#include <stdexcept>
+#include <format>
 #include <vector>
 #include <memory>
 #include "ProxyLibrary.h"
@@ -6,22 +8,27 @@
 #include "KRSAVerifyFileHook.h"
 #include "CreateFileHook.h"
 
-static std::vector<std::unique_ptr<WPSProfileVerificationPatch::IFunctionHook>> hooks;
+using namespace WPSProfileVerificationPatch;
+
+static std::vector<std::unique_ptr<IFunctionHook>> _hooks;
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reasonForCall, LPVOID reserved) {
     switch (reasonForCall) {
         case DLL_PROCESS_ATTACH:
             DisableThreadLibraryCalls(module);
             ProxyLibrary_Load();
-            hooks.push_back(std::make_unique<WPSProfileVerificationPatch::KRSAVerifyFileHook>());
+            _hooks.push_back(std::make_unique<KRSAVerifyFileHook>());
 #if defined WP_PACKET
-            hooks.push_back(std::make_unique<WPSProfileVerificationPatch::CreateFileHook>());
+            _hooks.push_back(std::make_unique<CreateFileHook>());
 #endif
-            WPSProfileVerificationPatch::HookManager::InstallHooks(hooks);
+            size_t count = HookManager::InstallHooks(_hooks);
+            if (count != _hooks.size()) {
+                HookManager::UninstallHooks(_hooks);
+            }
             break;
         case DLL_PROCESS_DETACH:
-            WPSProfileVerificationPatch::HookManager::UninstallHooks(hooks);
-            hooks.clear();
+            HookManager::UninstallHooks(_hooks);
+            _hooks.clear();
             ProxyLibrary_Unload();
             break;
     }
