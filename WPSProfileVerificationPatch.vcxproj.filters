@@ -48,6 +48,15 @@
     <ClCompile Include="Source\Utils\VersionUtil.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Utils\FileUtil.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HookManager.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CreateFileHook.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Detours\Detours.h">
@@ -69,6 +78,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utils\VersionUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utils\FileUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\IFunctionHook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HookManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CreateFileHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@ namespace WPSProfileVerificationPatch {
         FileUtil() = delete;
 
     public:
-        static bool IsFileExists(const std::string& filePath);
+        static bool IsFileExistsA(const std::string& filePath);
+        static bool IsFileExistsW(const std::wstring& filePath);
     };
 }

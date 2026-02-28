@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="MainDebug|ARM64">
+      <Configuration>MainDebug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="MainDebug|Win32">
       <Configuration>MainDebug</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MainRelease|ARM64">
+      <Configuration>MainRelease</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="MainRelease|Win32">
       <Configuration>MainRelease</Configuration>
@@ -17,6 +25,10 @@
       <Configuration>MainRelease</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="PacketDebug|ARM64">
+      <Configuration>PacketDebug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="PacketDebug|Win32">
       <Configuration>PacketDebug</Configuration>
       <Platform>Win32</Platform>
@@ -24,6 +36,10 @@
     <ProjectConfiguration Include="PacketDebug|x64">
       <Configuration>PacketDebug</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PacketRelease|ARM64">
+      <Configuration>PacketRelease</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="PacketRelease|Win32">
       <Configuration>PacketRelease</Configuration>
@@ -35,10 +51,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\CreateFileHook.cc" />
     <ClCompile Include="Source\Detours\Detours.cc" />
     <ClCompile Include="Source\Detours\DisAsm.cc" />
     <ClCompile Include="Source\Detours\Modules.cc" />
     <ClCompile Include="Source\DllMain.cc" />
+    <ClCompile Include="Source\HookManager.cc" />
     <ClCompile Include="Source\KRSAVerifyFileHook.cc" />
     <ClCompile Include="Source\Utils\FileUtil.cc" />
     <ClCompile Include="Source\Utils\VersionUtil.cc" />
@@ -48,18 +66,25 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Source\ProxyLibrary\NCrypt\ProxyLibraryGlobals.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Source\ProxyLibrary\ProxyLibrary.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\CreateFileHook.h" />
     <ClInclude Include="Source\Detours\Detours.h" />
+    <ClInclude Include="Source\HookManager.h" />
+    <ClInclude Include="Source\IFunctionHook.h" />
     <ClInclude Include="Source\KRSAVerifyFileHook.h" />
     <ClInclude Include="Source\Utils\FileUtil.h" />
     <ClInclude Include="Source\Utils\VersionUtil.h" />
@@ -77,15 +102,21 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'">true</ExcludedFromBuild>
     </MASM>
     <MASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExports64.asm">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|Win32'">true</ExcludedFromBuild>
     </MASM>
@@ -93,15 +124,21 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'">true</ExcludedFromBuild>
     </MASM>
     <MASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExports64.asm">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainRelease|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='MainDebug|Win32'">true</ExcludedFromBuild>
     </MASM>
@@ -147,14 +184,28 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|x64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -179,13 +230,25 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='MainDebug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -194,20 +257,48 @@
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'">
+    <TargetName>ncrypt</TargetName>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'">
     <TargetName>msi</TargetName>
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'">
+    <TargetName>msi</TargetName>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">
     <TargetName>ncrypt</TargetName>
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'">
+    <TargetName>ncrypt</TargetName>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">
     <TargetName>msi</TargetName>
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'">
+    <TargetName>msi</TargetName>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|Win32'">
     <TargetName>ncrypt</TargetName>
@@ -249,7 +340,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WP_MAIN;WIN32;NDEBUG;WP_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -283,7 +374,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WP_MAIN;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -325,7 +416,23 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WP_MAIN;NDEBUG;WP_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>Source\ProxyLibrary\NCrypt\ProxyLibraryExports.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Version.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|ARM64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WP_MAIN;NDEBUG;WP_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -351,6 +458,22 @@
       <AdditionalDependencies>Version.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|ARM64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WP_PACKET;NDEBUG;WP_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>Source\ProxyLibrary\Msi\ProxyLibraryExports.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Version.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -359,7 +482,27 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WP_MAIN;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>Source\ProxyLibrary\NCrypt\ProxyLibraryExports.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Version.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|ARM64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WP_MAIN;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -372,6 +515,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WP_PACKET;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>Source\ProxyLibrary\Msi\ProxyLibraryExports.def</ModuleDefinitionFile>
+      <AdditionalDependencies>Version.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|ARM64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>

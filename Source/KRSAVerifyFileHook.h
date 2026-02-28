@@ -1,19 +1,18 @@
 #pragma once
 #include <Windows.h>
 #include <string>
+#include "IFunctionHook.h"
 
 namespace WPSProfileVerificationPatch {
-    class KRSAVerifyFileHook {
-    private:
-        KRSAVerifyFileHook() = delete;
-
-    private:
-        static bool (*kRSAVerifyFile)(const std::string& publicKey, const std::string& fileHash, const std::string& fileSignature);
-        static bool KRSAVerifyFile(const std::string& publicKey, const std::string& fileHash, const std::string& fileSignature);
-        static void UpdateKRSAVerifyFileAddress();
-
+    class KRSAVerifyFileHook : public IFunctionHook {
     public:
-        static void Install() noexcept;
-        static void Uninstall() noexcept;
+        static bool (*kRSAVerifyFile)(const std::string&, const std::string&, const std::string&);
+
+        static bool KRSAVerifyFile(const std::string& publicKey, const std::string& fileHash, const std::string& fileSignature);
+
+        void LocateTarget() override;
+        PVOID* GetOriginalPointer() override;
+        PVOID GetDetourFunction() override;
+        const char* GetName() const override;
     };
 }
