@@ -10,9 +10,9 @@ namespace WPSProfileVerificationPatch {
 
         static bool KRSAVerifyFile(const std::string& publicKey, const std::string& fileHash, const std::string& fileSignature);
 
-        void LocateTarget() override;
-        PVOID* GetOriginalPointer() override;
-        PVOID GetDetourFunction() override;
+        void LocateTarget() const override;
+        PVOID* GetOriginalPointer() const override;
+        PVOID GetDetourFunction() const override;
         const char* GetName() const override;
     };
 }

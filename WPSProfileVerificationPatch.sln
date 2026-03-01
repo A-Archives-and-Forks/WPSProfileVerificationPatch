@@ -1,46 +1,58 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11520.95 d18.3
+VisualStudioVersion = 18.3.11520.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WPSProfileVerificationPatch", "WPSProfileVerificationPatch.vcxproj", "{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		MainDebug|ARM64 = MainDebug|ARM64
+		MainDebug|ARM64EC = MainDebug|ARM64EC
 		MainDebug|x64 = MainDebug|x64
 		MainDebug|x86 = MainDebug|x86
 		MainRelease|ARM64 = MainRelease|ARM64
+		MainRelease|ARM64EC = MainRelease|ARM64EC
 		MainRelease|x64 = MainRelease|x64
 		MainRelease|x86 = MainRelease|x86
 		PacketDebug|ARM64 = PacketDebug|ARM64
+		PacketDebug|ARM64EC = PacketDebug|ARM64EC
 		PacketDebug|x64 = PacketDebug|x64
 		PacketDebug|x86 = PacketDebug|x86
 		PacketRelease|ARM64 = PacketRelease|ARM64
+		PacketRelease|ARM64EC = PacketRelease|ARM64EC
 		PacketRelease|x64 = PacketRelease|x64
 		PacketRelease|x86 = PacketRelease|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|ARM64.ActiveCfg = MainDebug|ARM64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|ARM64.Build.0 = MainDebug|ARM64
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|ARM64EC.ActiveCfg = MainDebug|ARM64EC
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|ARM64EC.Build.0 = MainDebug|ARM64EC
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|x64.ActiveCfg = MainDebug|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|x64.Build.0 = MainDebug|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|x86.ActiveCfg = MainDebug|Win32
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainDebug|x86.Build.0 = MainDebug|Win32
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|ARM64.ActiveCfg = MainRelease|ARM64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|ARM64.Build.0 = MainRelease|ARM64
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|ARM64EC.ActiveCfg = MainRelease|ARM64EC
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|ARM64EC.Build.0 = MainRelease|ARM64EC
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|x64.ActiveCfg = MainRelease|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|x64.Build.0 = MainRelease|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|x86.ActiveCfg = MainRelease|Win32
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.MainRelease|x86.Build.0 = MainRelease|Win32
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|ARM64.ActiveCfg = PacketDebug|ARM64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|ARM64.Build.0 = PacketDebug|ARM64
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|ARM64EC.ActiveCfg = PacketDebug|ARM64EC
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|ARM64EC.Build.0 = PacketDebug|ARM64EC
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|x64.ActiveCfg = PacketDebug|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|x64.Build.0 = PacketDebug|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|x86.ActiveCfg = PacketDebug|Win32
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketDebug|x86.Build.0 = PacketDebug|Win32
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|ARM64.ActiveCfg = PacketRelease|ARM64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|ARM64.Build.0 = PacketRelease|ARM64
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|ARM64EC.ActiveCfg = PacketRelease|ARM64EC
+		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|ARM64EC.Build.0 = PacketRelease|ARM64EC
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|x64.ActiveCfg = PacketRelease|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|x64.Build.0 = PacketRelease|x64
 		{E86DA48F-51D1-46C8-A9CF-B768F16F9DF0}.PacketRelease|x86.ActiveCfg = PacketRelease|Win32

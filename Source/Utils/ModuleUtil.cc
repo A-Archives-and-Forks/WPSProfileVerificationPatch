@@ -28,17 +28,6 @@ namespace WPSProfileVerificationPatch {
         return reinterpret_cast<HMODULE>(memoryBasicInfo.AllocationBase);
     }
 
-    uint32_t ModuleUtil::GetSizeOfMemory(HMODULE module) {
-        if (module == nullptr) {
-            module = GetHandleW(std::nullopt);
-        }
-        MODULEINFO moduleInfo;
-        if (!GetModuleInformation(GetCurrentProcess(), module, &moduleInfo, sizeof(moduleInfo))) {
-            throw std::runtime_error("Failed to get module information");
-        }
-        return moduleInfo.SizeOfImage;
-    }
-
     std::string ModuleUtil::GetFileNameA(HMODULE module) {
         std::string buffer(MAX_PATH, 0);
         DWORD retSize = GetModuleFileNameA(module, buffer.data(), MAX_PATH);
@@ -77,5 +66,48 @@ namespace WPSProfileVerificationPatch {
         }
         fileName.resize(position + 1);
         return fileName;
+    }
+
+    std::vector<std::span<const uint8_t>> ModuleUtil::GetExecutableMemoryRegions(HMODULE module) {
+        std::vector<std::span<const uint8_t>> regions;
+
+        if (!module) {
+            module = GetHandleW(std::nullopt);
+        }
+
+        LPBYTE base = reinterpret_cast<LPBYTE>(module);
+
+        PIMAGE_DOS_HEADER dosHeader = reinterpret_cast<PIMAGE_DOS_HEADER>(base);
+        if (dosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
+            return regions;
+        }
+
+        PIMAGE_NT_HEADERS ntHeaders = reinterpret_cast<PIMAGE_NT_HEADERS>(base + dosHeader->e_lfanew);
+        if (ntHeaders->Signature != IMAGE_NT_SIGNATURE) {
+            return regions;
+        }
+
+        SIZE_T sizeOfImage = ntHeaders->OptionalHeader.SizeOfImage;
+
+        LPBYTE addr = base;
+        LPBYTE end = base + sizeOfImage;
+        MEMORY_BASIC_INFORMATION mbi;
+
+        while (addr < end) {
+            if (!VirtualQuery(addr, &mbi, sizeof(mbi))) {
+                break;
+            }
+
+            if (mbi.State == MEM_COMMIT) {
+                DWORD protect = mbi.Protect;
+                if ((protect & (PAGE_EXECUTE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE | PAGE_EXECUTE_WRITECOPY)) && !(protect & (PAGE_NOACCESS | PAGE_GUARD))) {
+                    regions.push_back(std::span<const uint8_t>(reinterpret_cast<const uint8_t*>(mbi.BaseAddress), mbi.RegionSize));
+                }
+            }
+
+            addr = static_cast<LPBYTE>(mbi.BaseAddress) + mbi.RegionSize;
+        }
+
+        return regions;
     }
 }

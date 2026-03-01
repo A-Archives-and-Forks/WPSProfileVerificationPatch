@@ -79,7 +79,7 @@ namespace WPSProfileVerificationPatch {
         );
     }
 
-    void CreateFileHook::LocateTarget() {
+    void CreateFileHook::LocateTarget() const {
         HMODULE kernel32 = GetModuleHandleW(L"kernel32.dll");
         if (!kernel32) {
             throw std::runtime_error("Failed to get kernel32.dll handle");
@@ -93,11 +93,11 @@ namespace WPSProfileVerificationPatch {
         createFileW = reinterpret_cast<decltype(createFileW)>(addressW);
     }
 
-    PVOID* CreateFileHook::GetOriginalPointer() {
+    PVOID* CreateFileHook::GetOriginalPointer() const {
         return reinterpret_cast<PVOID*>(&createFileW);
     }
 
-    PVOID CreateFileHook::GetDetourFunction() {
+    PVOID CreateFileHook::GetDetourFunction() const {
         return reinterpret_cast<PVOID>(&CreateFileW);
     }
 

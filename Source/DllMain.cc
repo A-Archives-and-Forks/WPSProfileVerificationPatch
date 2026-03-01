@@ -23,6 +23,7 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reasonForCall, LPVOID reserved) {
 #endif
             if (HookManager::InstallHooks(_hooks) != _hooks.size()) {
                 HookManager::UninstallHooks(_hooks);
+                _hooks.clear();
             }
             break;
         case DLL_PROCESS_DETACH:

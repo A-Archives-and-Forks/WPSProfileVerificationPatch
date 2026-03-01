@@ -41,9 +41,9 @@ namespace WPSProfileVerificationPatch {
         return true;
     }
 
-    void KRSAVerifyFileHook::LocateTarget() {
+    void KRSAVerifyFileHook::LocateTarget() const {
 #if defined DETOURS_ARM64
-        const std::array<uint16_t, 20> anchor = { 0x28, 0x15, 0x00, 0xD0, 0x15, 0x21, 0x29, 0x91, 0x28, 0x15, 0x00, 0xD0, 0x16, 0x61, 0x2F, 0x91, 0x75, 0x5A, 0x00, 0xA9 };
+        const std::array<uint16_t, 20> anchor = { 0x00, 0xD0, 0xFFFF, 0xFFFF, 0xFFFF, 0x91, 0xFFFF, 0xFFFF, 0x00, 0xD0, 0xFFFF, 0xFFFF, 0xFFFF, 0x91, 0xFFFF, 0x5A, 0x00, 0xA9 };
         const std::array<uint16_t, 4> prologue = { 0xFD, 0xFFFF, 0xFFFF, 0xA9 };
 #elif defined DETOURS_X64
         const std::array<uint16_t, 21> anchor = { 0x4C, 0x8D, 0x3D, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x4C, 0x89, 0x3F, 0x4C, 0x8D, 0x25, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x4C, 0x89, 0x67, 0x08 };
@@ -68,13 +68,13 @@ namespace WPSProfileVerificationPatch {
             // ProductName 不是 WPS Office，不进行 Hook
             throw std::runtime_error("ProductName is not WPS Office");
         }
-        std::span<const uint8_t> data;
+        std::vector<std::span<const uint8_t>> regions;
 #if defined WP_PACKET
         std::optional<std::span<const uint8_t>> internalName = VersionUtil::QueryVersionInfoValueW(versionInfoData, std::format(L"\\StringFileInfo\\{:04x}{:04x}\\InternalName", langId, codePage));
         if (internalName.has_value() && internalName->size() >= 8 && std::memcmp(internalName->data(), L"KPacket", 14) == 0) {
             // InternalName 以 KPacket 开头表明这是安装程序，要在主模块中查找特征码
             HMODULE module = ModuleUtil::GetHandleW(std::nullopt);
-            data = std::span<const uint8_t>(reinterpret_cast<const uint8_t*>(module), ModuleUtil::GetSizeOfMemory(module));
+            regions = ModuleUtil::GetExecutableMemoryRegions(module);
         } else {
             throw std::runtime_error("KRSAVerifyFileHook can only be installed in the installer module");
         }
@@ -88,7 +88,7 @@ namespace WPSProfileVerificationPatch {
             if (!krtModule) {
                 throw std::runtime_error("Failed to load krt.dll");
             }
-            data = std::span<const uint8_t>(reinterpret_cast<const uint8_t*>(krtModule), ModuleUtil::GetSizeOfMemory(krtModule));
+            regions = ModuleUtil::GetExecutableMemoryRegions(krtModule);
         } else {
             throw std::runtime_error("KRSAVerifyFileHook can only be installed in the main module with krt.dll loaded");
         }
@@ -100,7 +100,7 @@ namespace WPSProfileVerificationPatch {
 #else
         constexpr size_t maxMatches = 1;
 #endif
-        std::vector<const uint8_t*> anchors = PatternUtil::FindPattern(data, anchor, 0, false, maxMatches);
+        std::vector<const uint8_t*> anchors = PatternUtil::FindPatternInRegions(regions, anchor, 0, false, maxMatches);
         if (anchors.size() == 0) {
             throw std::runtime_error("Failed to find KRSAVerifyFile anchor");
         }
@@ -109,18 +109,22 @@ namespace WPSProfileVerificationPatch {
             throw std::runtime_error("Multiple KRSAVerifyFile anchors found");
         }
 #endif
-        std::vector<const uint8_t*> prologues = PatternUtil::FindPattern(data, prologue, anchors[0] - data.data(), true, 1);
+        std::optional<std::span<const uint8_t>> region = PatternUtil::FindRegionContaining(regions, anchors[0]);
+        if (!region.has_value()) {
+            throw std::runtime_error("Failed to find anchors region");
+        }
+        std::vector<const uint8_t*> prologues = PatternUtil::FindPattern(region.value(), prologue, anchors[0] - region.value().data(), true, 1);
         if (prologues.size() == 0) {
             throw std::runtime_error("Failed to find KRSAVerifyFile prologue");
         }
         kRSAVerifyFile = reinterpret_cast<decltype(kRSAVerifyFile)>(prologues[0]);
     }
 
-    PVOID* KRSAVerifyFileHook::GetOriginalPointer() {
+    PVOID* KRSAVerifyFileHook::GetOriginalPointer() const {
         return reinterpret_cast<PVOID*>(&kRSAVerifyFile);
     }
 
-    PVOID KRSAVerifyFileHook::GetDetourFunction() {
+    PVOID KRSAVerifyFileHook::GetDetourFunction() const {
         return reinterpret_cast<PVOID>(KRSAVerifyFile);
     }
 

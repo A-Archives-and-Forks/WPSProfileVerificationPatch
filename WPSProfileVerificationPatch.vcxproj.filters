@@ -102,16 +102,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExports32.asm">
+    <MASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExportsI386.asm">
       <Filter>Source Files</Filter>
     </MASM>
-    <MASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExports64.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExports32.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExports64.asm">
+    <MASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExportsI386.asm">
       <Filter>Source Files</Filter>
     </MASM>
   </ItemGroup>
@@ -124,5 +118,10 @@
     <Xml Include="Source\Resources\Manifest.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <MARMASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExportsArm64.asm">
+      <Filter>Source Files</Filter>
+    </MARMASM>
   </ItemGroup>
 </Project>
