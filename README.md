@@ -1,24 +1,24 @@
-# WPS Office 配置文件哈希校验补丁
+# WPS 配置文件哈希校验补丁
 
-本补丁用于跳过 WPS Office 安装程序和主程序的配置文件哈希校验（oem.ini/product.dat）。
+本补丁用于跳过 WPS 安装程序和主程序对配置文件（`oem.ini` / `product.dat` / `product_new.dat`）的哈希校验，并支持自动替换安装程序加载的 `product.dat` 和 `product_new.dat`，从而实现灵活的配置自定义。
 
 ## 使用方式
 
-> 本补丁可以配合 [WPSProfileCipher](https://github.com/YukiIsait/WPSProfileCipher) 使用以实现更方便的配置文件自定义。
+> 本补丁可以配合 [WPSProfileCipher](https://github.com/NixaVulpi/WPSProfileCipher) 使用以实现更方便的配置文件自定义。
 
 1. 根据不同架构的安装程序和主程序选择相应的补丁：
     - 安装程序：
         1. 解压缩安装包以提取出 `$_11_\$EXEFILE` 并添加 `.exe` 拓展名。
-        2. 根据架构选择 `msi64.dll` 或 `msi32.dll` 并重命名为 `msi.dll` 后放置于 `$EXEFILE.exe` 的同目录下。
+        2. 根据架构选择 `msi64.dll` / `msi32.dll` 并重命名为 `msi.dll` 后放置于 `$EXEFILE.exe` 的同目录下。
 
     - 主程序：
         1. 安装完成主程序。
-        2. 根据架构选择 `ncrypt64.dll` 或 `ncrypt32.dll` 并重命名为 `ncrypt.dll` 后放置于安装目录的 `<最新版本号>\office6` 目录下。
+        2. 根据架构选择 `ncrypt64.dll` / `ncrypt32.dll` 并重命名为 `ncrypt.dll` 后放置于安装目录的 `<最新版本号>\office6` 目录下。
 
 2. 将自定义的配置文件结尾的数字签名部分全部置为 `0`，数字签名部分要以分号开头且独占最后一行（无换行符）。
 3. 将自定义的配置文件放置于指定位置：
-    - 安装程序：将 `oem.ini` 放置于 `$EXEFILE.exe` 的同目录下。
-    - 主程序：将 `oem.ini` 或 `product.dat` 放置于 `<最新版本号>\office6\cfgs` 目录下。
+    - 安装程序：将 `oem.ini` / `product.dat` / `product_new.dat` 放置于 `$EXEFILE.exe` 的同目录下。
+    - 主程序：将 `oem.ini` / `product.dat` / `product_new.dat` 放置于 `<最新版本号>\office6\cfgs` 目录下。
 
 4. 运行安装程序或主程序即可正确加载自定义的配置文件。
 
