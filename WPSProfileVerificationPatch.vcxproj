@@ -379,6 +379,7 @@
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <BuildAsX>true</BuildAsX>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketDebug|x64'">
     <TargetName>msi</TargetName>
@@ -396,6 +397,7 @@
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <BuildAsX>true</BuildAsX>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainRelease|x64'">
     <TargetName>ncrypt</TargetName>
@@ -413,6 +415,7 @@
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <BuildAsX>true</BuildAsX>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PacketRelease|x64'">
     <TargetName>msi</TargetName>
@@ -430,6 +433,7 @@
     <IncludePath>$(ProjectDir)Source;$(ProjectDir)Source\Utils;$(ProjectDir)Source\Detours;$(ProjectDir)Source\ProxyLibrary;$(ProjectDir)Source\ProxyLibrary\Msi;$(ProjectDir)Source\ProxyLibrary\NCrypt;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ShortProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <BuildAsX>true</BuildAsX>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MainDebug|Win32'">
     <TargetName>ncrypt</TargetName>

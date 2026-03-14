@@ -108,6 +108,12 @@
     <MASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExportsI386.asm">
       <Filter>Source Files</Filter>
     </MASM>
+    <MASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExportsAmd64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
+    <MASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExportsAmd64.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Resources\Resources.rc">
@@ -121,6 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <MARMASM Include="Source\ProxyLibrary\Msi\ProxyLibraryExportsArm64.asm">
+      <Filter>Source Files</Filter>
+    </MARMASM>
+    <MARMASM Include="Source\ProxyLibrary\NCrypt\ProxyLibraryExportsArm64.asm">
       <Filter>Source Files</Filter>
     </MARMASM>
   </ItemGroup>
